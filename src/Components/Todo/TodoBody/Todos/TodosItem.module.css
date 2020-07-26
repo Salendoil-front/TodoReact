@@ -1,0 +1,53 @@
+.TodosItem{
+	margin-bottom: 10px;
+	padding:  0 10px;
+	list-style: none;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	height: auto;
+	border: 2px solid #000;
+	border-radius: 8px;
+	font-weight: 700;
+	font-size: 18px;
+}
+
+.TodosItem:nth-child(odd){
+	background:linear-gradient(to top right, #f86c39 0%, #cc3b4e 37%, #f1397c 100%);
+}
+
+.TodosItem:nth-child(even){
+	background:linear-gradient(to top right, #fd8355 0%, #f0576c 37%, #f79cbd 100%);
+}
+
+.TodosItem i{
+	margin-right: 5px;
+	cursor: pointer;
+	transition: color .3s linear;
+}
+
+.TodosItem i:hover{
+	color: blue;
+}
+
+.TodoInfo{
+	width: 90%;
+}
+
+.TodoTitle{
+	text-decoration: underline;
+	font-size: 24px;
+	font-weight: bold;
+}
+
+.TodoInfo .TodoTitle{
+	text-align: center;
+}
+
+.TodoDescription{
+	margin: 5px 0;
+}
+
+.TodoInfo .TodoDescription{
+	text-align: left;
+}

@@ -1,0 +1,28 @@
+.Help{
+	position: fixed;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	width: 80%;
+	max-width: 300px;
+	padding: 20px 10px;
+	box-sizing: border-box;
+	background-color: #fff;
+	z-index: 90;
+	transform: translateX(300px);
+	transition: transform .6s linear;
+	border-top-left-radius: 100px;
+	border-bottom-left-radius: 100px;
+}
+
+.Help.open{
+	transform:translateX(0)
+}
+
+.Help ul{
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	font-size: 20px;
+	font-weight: 700;
+}

@@ -1,0 +1,21 @@
+.TodoFooter{
+	margin: 20px 0;
+	padding: 0 0 20px;
+	display: flex;
+	justify-content: space-between;
+}
+
+.TodoFooter button{
+	margin: 0 20px;
+	padding: 10px;
+	font-size: 18px;
+	font-weight: 900;
+	box-shadow: 5px 5px 10px 5px #000;
+	transition: all .3s linear;
+	background:linear-gradient(to right, red,orange, yellow, green,skyblue ,blue, purple);
+	border:0;
+}
+
+.TodoFooter button:hover{
+	box-shadow: 10px 5px 10px 5px #000;
+}

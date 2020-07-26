@@ -1,0 +1,17 @@
+.BurgerHelp{
+	position: fixed;
+	top: 20px;
+	bottom: 0;
+	right: 20px;
+	z-index: 100;
+	font-size: 26px;
+	cursor: pointer;
+	width: 20px;
+	height: 20px;
+	transition: all .6s linear;
+
+}
+
+.BurgerHelp.close{
+	right: 320px;
+}
