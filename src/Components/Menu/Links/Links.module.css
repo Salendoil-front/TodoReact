@@ -7,7 +7,7 @@
 	max-width: 300px;
 	padding: 20px 10px;
 	box-sizing: border-box;
-	background-color: #fff;
+	background: linear-gradient(to bottom right, #a23bdf, #3c11b1);
 	z-index: 90;
 	transform: translateX(-300px);
 	transition: transform .6s linear;
@@ -42,8 +42,24 @@
 	text-transform: uppercase;
 	position: relative;
 	padding: 0 20px 10px 20px;
+	opacity: .7;
+	font-weight: bold;
+	color: #000;
 }
 
 .Links ul li a:hover{
-	opacity: .7;
+	opacity: 1;
 }	
+
+.Links button{
+	position: absolute;
+	bottom: 120px;
+	left: 15%;
+	border: 0;
+	border-radius: 8px;
+	background: linear-gradient(to right, #2f3fc9 0%, #071561 100%);
+	color:#fff;
+	padding: 10px;
+	font-size: 20px;
+	font-weight: bold;
+}

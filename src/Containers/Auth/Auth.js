@@ -2,7 +2,8 @@ import React from 'react'
 import classes from './Auth.module.css'
 import Button from '../../UI/Button/Button'
 import Input from '../../UI/Input/Input'
-//import axios from 'axios'
+import {connect} from 'react-redux'
+import { auth } from '../../store/Actions/auth'
 
 
 class Auth extends React.Component {
@@ -37,13 +38,17 @@ class Auth extends React.Component {
 		}
 	}
 
-	loginHandler = async () => {
-		const authData = {
+	loginHandler = () => {
+		this.props.auth(
+			this.state.formControls.login.value,
+			this.state.formControls.password.value
+		)
+		/* const authData = {
 			username : this.state.formControls.login.value,
 			password: this.state.formControls.password.value,
 			returnSecureToken: true
-		}
-		const headers={'Content-Type': 'application/json'}
+		} */
+		/* const headers={'Content-Type': 'application/json'}
 
 		try{
 			return await fetch('http://176.57.78.17:8095/api/token/',{
@@ -62,13 +67,17 @@ class Auth extends React.Component {
 
 		} catch(e){
 		console.log(e)
-	}
+	} */
 }
 
 		
 
 	registerHandler = () => {
-
+		this.props.auth(
+			this.state.formControls.login.value,
+			this.state.formControls.password.value,
+			false
+		)
 	}
 
 	sumblitHandler = event => {
@@ -156,4 +165,12 @@ class Auth extends React.Component {
 	}
 }
 
-export default Auth
+
+
+function mapDispatchToProps(dispatch){
+	return{
+		auth: (login, password) => dispatch(auth(login,password))
+	}
+}
+
+export default connect(null, mapDispatchToProps)(Auth)

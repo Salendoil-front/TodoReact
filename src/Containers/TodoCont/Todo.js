@@ -7,21 +7,14 @@ import Help from '../../Components/Help/Help'
 import BurgerHelp from '../../Components/Help/BurgerHelp/BurgerHelp'
 import Backdrop from '../../UI/Backdrop/Backdrop'
 import TodoUpdate from '../../Components/Todo/TodoUpdate/TodoUpdate'
+import { connect } from 'react-redux'
+import { todoHomeGetTodos, todoHomePushTodo } from '../../store/Actions/todoHome'
 
 class Todo extends React.Component {
 	state = {
 		update: false,
 		menu: false,
 		newTodos: false,
-		todos: [
-			{
-				"id": 2,
-				"title": "Leha's task",
-				"description": "This is lehas task",
-				"owner": "leha",
-				"change_date": "2020-07-25T19:00:43.748693Z"
-			}
-		],
 		todoDescription: '',
 		todoTitle: '',
 		todoId: ''
@@ -56,15 +49,6 @@ class Todo extends React.Component {
 	}
 
 	changeTodoTitle = (name) => {
-		/* 
-		const todos = this.state.todos
-		todos.forEach(obj => {
-			if(obj.id === this.state.todoId){
-				this.setState({
-					todoTitle: obj.title
-				})
-			}
-		}) */
 		this.setState({
 			todoTitle: name
 		})
@@ -72,15 +56,16 @@ class Todo extends React.Component {
 
 
 
-	pushNewTodos = async () => {
-		
-		const headers = {
+	pushNewTodos =  () => {
+		this.props.pushTodo(this.state.todoTitle,this.state.todoDescription)
+		/* const headers = {
 			Authorization: 'Bearer ' + localStorage.getItem('accesstoken'),
 			'Content-Type': 'application/json'
 		}
 		let body = {
 			title: this.state.todoTitle,
-			description: this.state.todoDescription
+			description: this.state.todoDescription,
+			status: 0
 		}
 
 		try {
@@ -104,7 +89,7 @@ class Todo extends React.Component {
 				})
 		} catch (e) {
 			console.log(e)
-		}
+		} */
 	}
 
 	deleteTodos = (id) => {
@@ -151,7 +136,8 @@ class Todo extends React.Component {
 		}
 		const body = {
 			title:this.state.todoTitle,
-			description:this.state.todoDescription
+			description:this.state.todoDescription,
+			status: 0
 		}
 		try{
 			return fetch(`http://176.57.78.17:8095/testapp/todotask/${this.state.todoId}/`,{
@@ -179,20 +165,21 @@ class Todo extends React.Component {
 		}
 	}
 
-	componentDidMount = async () => {
-		const headers = {
+	componentDidMount () {
+		this.props.getTodos()
+		/* const headers = {
 			Authorization: 'Bearer ' + localStorage.getItem('accesstoken')
 		}
 
 		console.log(localStorage.getItem('accesstoken'))
 		try {
-			return await fetch('http://176.57.78.17:8095/testapp/todotasks/', {
+			return await fetch('http://176.57.78.17:8095/testapp/todotasks/?page=1', {
 				method: 'GET',
 				headers: headers
 			}).then(res => res.json())
 				.then(res => {
 					this.setState({
-						todos: res
+						todos: res.results
 					})
 					console.log(this.state.todos)
 				})
@@ -208,14 +195,14 @@ class Todo extends React.Component {
 					todos: todosArr
 				})
 			}
-		}
+		} */
 	}
 
 	render() {
 		return (
 			<div className={classes.Todo}>
 				<div>
-					<Help isOpen={this.state.menu} allTodos={this.state.todos.length} />
+					<Help isOpen={this.state.menu} allTodos={this.props.todos.length} />
 					<BurgerHelp isOpen={this.state.menu} onClick={this.toggleMenuHandler} />
 					{this.state.menu ? <Backdrop onClick={this.toggleMenuHandler} /> : null}
 					<div className={classes.TodoInner}>
@@ -229,7 +216,7 @@ class Todo extends React.Component {
 							title={'Начать новое дело'}
 						/>
 
-						<TodoBody todos={this.state.todos} onDelete={this.deleteTodos} showUpdateFrom={this.showUpdateFrom} />
+						<TodoBody todos={this.props.todos} onDelete={this.deleteTodos} showUpdateFrom={this.showUpdateFrom} />
 						
 						{this.state.update
 							? <TodoUpdate
@@ -249,4 +236,17 @@ class Todo extends React.Component {
 	}
 }
 
-export default Todo
+function mapStateToProps(state){
+	return{
+		todos: state.todoHome.todos
+	}
+}
+
+function mapDispatchToProps(dispatch) {
+	return{
+		getTodos: () => dispatch(todoHomeGetTodos()),
+		pushTodo: (title, descrption) => dispatch(todoHomePushTodo(title, descrption))
+	}
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(Todo)

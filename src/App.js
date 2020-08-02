@@ -1,21 +1,48 @@
 import React from 'react';
-import {Switch, Route} from 'react-router-dom'
+import { Switch, Route, Redirect } from 'react-router-dom'
 import './App.css';
 import Main from './hoc/Main/Main'
 import Todo from './Containers/TodoCont/Todo'
 import Auth from './Containers/Auth/Auth'
+import { connect } from 'react-redux';
+import Logout from './Components/Logout/Logout';
 
-function App() {
-	return (
-		<div className="App">
-			<Main>
+class App extends React.Component {
+
+	render() {
+		let routes = (
+			<Switch>
+				<Route path="/" component={Auth} />
+				<Redirect to="/" />
+			</Switch>
+		)
+
+		if (this.props.isAuth) {
+			routes = (
 				<Switch>
-					<Route path="/todo" component={Todo} />
-					<Route path="/" component={Auth} />
+					<Route path="/" component={Todo} />
+					<Route path="/auth" component={Auth} />
+					<Route path="/logout" component={Logout} />
+					<Redirect to="/" />
 				</Switch>
-			</Main>
-		</div>
-	);
+			)
+		}
+
+		return (
+			<div className="App">
+				<Main>
+					{routes}
+				</Main>
+			</div>
+		);
+	}
+
 }
 
-export default App;
+function mapStateToProps(state) {
+	return {
+		isAuth: state.auth.isAuth
+	}
+}
+
+export default connect(mapStateToProps)(App)
